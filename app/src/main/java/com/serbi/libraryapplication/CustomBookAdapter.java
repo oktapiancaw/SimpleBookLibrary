@@ -1,5 +1,6 @@
 package com.serbi.libraryapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,8 +16,11 @@ import java.util.ArrayList;
 
 public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.MyViewHolder> {
 
-    private Context context;
-    private ArrayList book_id, book_title, book_author, book_pages;
+    private final Context context;
+    private final ArrayList book_id;
+    private final ArrayList book_title;
+    private final ArrayList book_author;
+    private final ArrayList book_pages;
 
     public CustomBookAdapter(Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages) {
         this.context = context;
@@ -35,21 +39,18 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomBookAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomBookAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tv_book_id.setText(book_id.get(position).toString());
         holder.tv_book_title.setText(book_title.get(position).toString());
         holder.tv_book_author.setText(book_author.get(position).toString());
         holder.tv_book_pages.setText(book_pages.get(position).toString());
-        holder.bookRowLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent updateBookIntent = new Intent(context, UpdateBookActivity.class);
-                updateBookIntent.putExtra("id", book_id.get(position).toString());
-                updateBookIntent.putExtra("title", book_title.get(position).toString());
-                updateBookIntent.putExtra("author", book_author.get(position).toString());
-                updateBookIntent.putExtra("pages", book_pages.get(position).toString());
-                context.startActivity(updateBookIntent);
-            }
+        holder.bookRowLinearLayout.setOnClickListener(v -> {
+            Intent updateBookIntent = new Intent(context, UpdateBookActivity.class);
+            updateBookIntent.putExtra("id", book_id.get(position).toString());
+            updateBookIntent.putExtra("title", book_title.get(position).toString());
+            updateBookIntent.putExtra("author", book_author.get(position).toString());
+            updateBookIntent.putExtra("pages", book_pages.get(position).toString());
+            context.startActivity(updateBookIntent);
         });
     }
 
@@ -58,7 +59,7 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
         return book_id.size()   ;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_book_id, tv_book_title, tv_book_author, tv_book_pages;
         LinearLayout bookRowLinearLayout;
 

@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
-    private static final String DATABSE_NAME = "library.db";
+    private final Context context;
+    private static final String DATABASE_NAME = "library.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "books";
@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PAGES = "book_pages";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABSE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
 
