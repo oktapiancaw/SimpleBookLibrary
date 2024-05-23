@@ -52,6 +52,13 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
             updateBookIntent.putExtra("pages", book_pages.get(position).toString());
             context.startActivity(updateBookIntent);
         });
+
+        holder.bookRowLinearLayout.setOnLongClickListener(v -> {
+            DatabaseHelper databaseHelper = new DatabaseHelper(context);
+            databaseHelper.deleteBook(book_id.get(position).toString());
+            context.startActivity(new Intent(context, MainActivity.class));
+            return true;
+        });
     }
 
     @Override
