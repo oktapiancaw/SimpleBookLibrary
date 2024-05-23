@@ -13,14 +13,17 @@
         android:theme="@style/Theme.LibraryApplication"
         tools:targetApi="31">
         <activity
-            android:name=".AddBookActivity"
-            android:label="Add Books"
-            android:parentActivityName=".MainActivity"
+            android:name=".UpdateBookActivity"
             android:exported="false" />
         <activity
+            android:name=".AddBookActivity"
+            android:exported="false"
+            android:label="Add Books"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".MainActivity"
-            android:label="Library"
-            android:exported="true">
+            android:exported="true"
+            android:label="Library">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

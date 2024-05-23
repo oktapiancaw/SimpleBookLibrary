@@ -1,9 +1,11 @@
 package com.serbi.libraryapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,17 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
         holder.tv_book_title.setText(book_title.get(position).toString());
         holder.tv_book_author.setText(book_author.get(position).toString());
         holder.tv_book_pages.setText(book_pages.get(position).toString());
+        holder.bookRowLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent updateBookIntent = new Intent(context, UpdateBookActivity.class);
+                updateBookIntent.putExtra("id", book_id.get(position).toString());
+                updateBookIntent.putExtra("title", book_title.get(position).toString());
+                updateBookIntent.putExtra("author", book_author.get(position).toString());
+                updateBookIntent.putExtra("pages", book_pages.get(position).toString());
+                context.startActivity(updateBookIntent);
+            }
+        });
     }
 
     @Override
@@ -47,6 +60,7 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_book_id, tv_book_title, tv_book_author, tv_book_pages;
+        LinearLayout bookRowLinearLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +68,7 @@ public class CustomBookAdapter extends RecyclerView.Adapter<CustomBookAdapter.My
             tv_book_title = itemView.findViewById(R.id.tv_book_title);
             tv_book_author = itemView.findViewById(R.id.tv_book_author);
             tv_book_pages = itemView.findViewById(R.id.tv_book_pages);
+            bookRowLinearLayout = itemView.findViewById(R.id.bookRow);
         }
     }
 }
