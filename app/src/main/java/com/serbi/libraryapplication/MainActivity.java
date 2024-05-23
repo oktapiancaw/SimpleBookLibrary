@@ -1,13 +1,11 @@
 package com.serbi.libraryapplication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -60,18 +58,8 @@ public class MainActivity extends AppCompatActivity {
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
 
-        btn_deleteAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteAllBook();
-            }
-        });
-        btn_toAddBookPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddBookActivity.class));
-            }
-        });
+        btn_deleteAll.setOnClickListener(v -> deleteAllBook());
+        btn_toAddBookPage.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddBookActivity.class)));
 
         storeBookDataInArrays();
         bookAdapter = new CustomBookAdapter(MainActivity.this, book_id, book_title, book_author, book_pages);
@@ -102,20 +90,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Delete all books");
         builder.setMessage("Are you sure you want to delete all books?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                database.deleteAllBook();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-                finish();
-            }
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            database.deleteAllBook();
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+            finish();
         });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing
-            }
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Do nothing
         });
         builder.create().show();
     }

@@ -34,21 +34,13 @@ public class AddBookActivity extends AppCompatActivity {
         et_bookAuthor = findViewById(R.id.et_bookAuthor);
         et_bookPages = findViewById(R.id.et_bookPages);
 
-        btn_addBookToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddBookActivity.this, MainActivity.class));
-            }
-        });
+        btn_addBookToMain.setOnClickListener(v -> startActivity(new Intent(AddBookActivity.this, MainActivity.class)));
 
-        btn_addBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper database = new DatabaseHelper(AddBookActivity.this);
-                database.addBook(et_bookName.getText().toString().trim(),
-                        et_bookAuthor.getText().toString().trim(),
-                        Integer.parseInt(et_bookPages.getText().toString().trim()));
-            }
+        btn_addBook.setOnClickListener(v -> {
+            DatabaseHelper database = new DatabaseHelper(AddBookActivity.this);
+            database.addBook(et_bookName.getText().toString().trim(),
+                    et_bookAuthor.getText().toString().trim(),
+                    Integer.parseInt(et_bookPages.getText().toString().trim()));
         });
     }
 }
