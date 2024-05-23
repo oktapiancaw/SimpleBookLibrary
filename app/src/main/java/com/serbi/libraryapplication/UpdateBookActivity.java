@@ -1,5 +1,6 @@
 package com.serbi.libraryapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class UpdateBookActivity extends AppCompatActivity {
 
     EditText et_bookName_update, et_bookAuthor_update, et_bookPages_update;
-    Button btn_updateBookToMain, btn_updateBook;
+    Button btn_updateBookToMain, btn_updateBook, btn_deleteBook;
     String bookId, bookName, bookAuthor, bookPages;
 
     @Override
@@ -35,6 +37,7 @@ public class UpdateBookActivity extends AppCompatActivity {
         et_bookAuthor_update = findViewById(R.id.et_bookAuthor_update);
         et_bookPages_update = findViewById(R.id.et_bookPages_update);
 
+        btn_deleteBook = findViewById(R.id.btn_deleteBook);
         btn_updateBook = findViewById(R.id.btn_updateBook);
         btn_updateBookToMain = findViewById(R.id.btn_updateBookToMain);
 
@@ -59,6 +62,13 @@ public class UpdateBookActivity extends AppCompatActivity {
                 databaseHelper.updateBook(bookId, updatedBookName, updatedBookAuthor, updateBookPages);
             }
         });
+
+        btn_deleteBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDeleteBookDialog();
+            }
+        });
     }
 
     private void getAndSetIntentData() {
@@ -74,5 +84,29 @@ public class UpdateBookActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No book data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void confirmDeleteBookDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateBookActivity.this);
+        builder.setTitle("Delete " + bookName + "?");
+        builder.setMessage("Are you sure you want to delete " + bookName + "?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(UpdateBookActivity.this);
+                databaseHelper.deleteBook(bookId);
+                startActivity(new Intent(UpdateBookActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+            }
+        });
+
+        builder.create().show();
     }
 }

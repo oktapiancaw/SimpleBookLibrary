@@ -71,6 +71,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteBook(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(TABLE_NAME, "id=?", new String[]{id});
+        
+        if (result == -1) {
+            Toast.makeText(context, "Failed to remove book", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Book has been removed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public Cursor readAllData() {
         String readAllDataQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase database = this.getReadableDatabase();
