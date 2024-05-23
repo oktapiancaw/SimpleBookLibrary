@@ -74,6 +74,7 @@ public class UpdateBookActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(UpdateBookActivity.this);
         builder.setTitle("Delete " + bookName + "?");
         builder.setMessage("Are you sure you want to delete " + bookName + "?");
+
         builder.setPositiveButton("Yes", (dialog, which) -> {
             DatabaseHelper databaseHelper = new DatabaseHelper(UpdateBookActivity.this);
             databaseHelper.deleteBook(bookId);
@@ -84,7 +85,6 @@ public class UpdateBookActivity extends AppCompatActivity {
         builder.setNegativeButton("No", (dialog, which) -> {
             // Do nothing
         });
-
         builder.create().show();
     }
 }

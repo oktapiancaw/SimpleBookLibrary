@@ -82,6 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteAllBook() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("DELETE FROM " + TABLE_NAME);
+    }
+
     public Cursor readAllData() {
         String readAllDataQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase database = this.getReadableDatabase();
