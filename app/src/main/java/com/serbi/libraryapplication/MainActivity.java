@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.getCount() == 0) {
             iv_noData.setVisibility(View.VISIBLE);
             tv_noData_txt.setVisibility(View.VISIBLE);
+            btn_deleteAll.setVisibility(View.GONE);
         } else {
             while (cursor.moveToNext()) {
                 book_id.add(cursor.getString(0));
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                 iv_noData.setVisibility(View.GONE);
                 tv_noData_txt.setVisibility(View.GONE);
+                btn_deleteAll.setVisibility(View.VISIBLE);
             }
         }
     }
